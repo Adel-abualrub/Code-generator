@@ -1,20 +1,60 @@
-// Code Gen.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <cstdlib>
+using namespace std;
+enum TypeOf { SmallLatare = 1, CapetalLatar = 2, num = 3, Specialchar = 4 };
+int random(int from, int to) {
+	int num = rand() % (to - from + 1) + from;
+	return num;
+}
+int HowManyKeys() {
+	cout << "Please enter how Many Key you need to generated\n";
+	int num;
+	cin >> num;
+	return num;
+}
+char TypeOfRandom(TypeOf Type) {
+	switch (Type) {
+	case TypeOf::CapetalLatar:
+		return char(random(65, 90));
+		break;
+	case TypeOf::SmallLatare:
+		return char(random(97, 122));
+		break;
+	case TypeOf::num:
+		return char(random(48, 57));
+		break;
+	case TypeOf::Specialchar:
+		return char(random(33, 47));
+		break;
+	}
 
-int main()
-{
-    std::cout << "Hello World!\n";
+
+
+}
+string GenerateWord(TypeOf type, short int lengthOfWord) {
+	string word = "";
+	for (int i = 0; i < lengthOfWord; i++) {
+		word += TypeOfRandom(TypeOf::CapetalLatar);
+	}
+	return word;
+}
+string GenerateKey(short int LengthOfKey) {
+	string key = "";
+	key = GenerateWord(TypeOf::CapetalLatar, 4) + "-";
+	key += GenerateWord(TypeOf::CapetalLatar, 4) + "-";
+	key += GenerateWord(TypeOf::CapetalLatar, 4) + "-";
+	key += GenerateWord(TypeOf::CapetalLatar, 4);
+	return key;
+}
+void GenerateKeys(short int NumOfKey) {
+	for (int i = 1; i <= NumOfKey; i++) {
+		cout << "Key [" << i << "]" << GenerateKey(4) << endl;
+	}
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+int main() {
+	GenerateKeys(HowManyKeys());
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+
+	return 0;
+}
